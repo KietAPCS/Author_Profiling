@@ -23,19 +23,31 @@ st.set_page_config(
     page_title="✍️ Author Profiling Analytics",
     page_icon="📚",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
+    menu_items={
+        'About': "Author Profiling Analytics Tool - Created by KietAPCS"
+    }
 )
 
-# Custom CSS for beautiful styling
+# Custom CSS for beautiful styling with black background
 st.markdown("""
 <style>
+    body {
+        background-color: #000000;
+        color: #ffffff;
+    }
+    
+    .stApp {
+        background-color: #000000;
+    }
+    
     .main-header {
         background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
         padding: 2rem;
         border-radius: 10px;
         text-align: center;
         margin-bottom: 2rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.10);
     }
     .main-header h1 {
         color: white;
@@ -50,12 +62,13 @@ st.markdown("""
         margin: 0;
     }
     .metric-card {
-        background: white;
+        background: #1e1e1e;
         padding: 1.5rem;
         border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
         border-left: 4px solid #667eea;
         margin: 1rem 0;
+        color: #ffffff;
     }
     .comparison-result {
         background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
@@ -64,17 +77,21 @@ st.markdown("""
         border-radius: 15px;
         text-align: center;
         margin: 2rem 0;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.4);
     }
     .stTextArea > div > div > textarea {
-        background: #f8f9fa;
+        background: #2d2d2d;
+        color: #ffffff;
         border-radius: 10px;
-        border: 2px solid #e9ecef !important;
+        border: 2px solid #4d4d4d !important;
         transition: border-color 0.3s;
+        font-size: 1rem;
+        padding: 10px;
+        min-height: 300px;
     }
     .stTextArea > div > div > textarea:focus {
         border-color: #667eea !important;
-        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25) !important;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.4) !important;
     }
     .sidebar-info {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -97,6 +114,25 @@ st.markdown("""
         cursor: pointer;
         transition: all 0.3s;
         width: 100%;
+    }
+    
+    /* Additional styles for better visibility in dark mode */
+    .stMarkdown {
+        color: #ffffff;
+    }
+    
+    .stButton button {
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        font-weight: 600;
+    }
+    
+    /* Input labels - make them more visible */
+    .stTextArea label, .stSlider label {
+        color: #f8f9fa !important;
+        font-weight: 500;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -240,9 +276,10 @@ def main():
         st.markdown("### 📝 Original Text")
         original_text = st.text_area(
             "Enter the original text for comparison:",
-            height=300,
+            height=350,
             placeholder="Paste the original author's text here...",
-            help="Enter a substantial text sample for better accuracy"
+            help="Enter a substantial text sample for better accuracy",
+            key="original_text_input"
         )
         
         if show_stats and original_text:
@@ -261,9 +298,10 @@ def main():
         st.markdown("### 🔍 Test Text")
         test_text = st.text_area(
             "Enter the test text for comparison:",
-            height=300,
+            height=350,
             placeholder="Paste the text to analyze here...",
-            help="Enter the text you want to verify authorship for"
+            help="Enter the text you want to verify authorship for",
+            key="test_text_input"
         )
         
         if show_stats and test_text:
